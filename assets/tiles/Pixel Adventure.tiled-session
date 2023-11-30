@@ -3,10 +3,33 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "Level-01.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "Level-01.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 343,
+                "y": 152
+            }
+        },
+        "Level-02.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 320,
+                "y": 234
+            }
+        },
+        "Pixel Adventure.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
     },
     "last.imagePath": "C:/Users/tiger/OneDrive/Documents/GitHub/pixel_adventure/assets/images/Terrain",
     "map.height": 23,
@@ -15,9 +38,13 @@
     "map.tileWidth": 16,
     "map.width": 40,
     "openFiles": [
+        "Pixel Adventure.tsx",
+        "Level-01.tmx"
     ],
     "project": "Pixel Adventure.tiled-project",
     "recentFiles": [
+        "Pixel Adventure.tsx",
+        "Level-01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
