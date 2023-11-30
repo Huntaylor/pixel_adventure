@@ -29,7 +29,7 @@ class PixelAdventure extends FlameGame
     final world = Level(
       levelName: 'Level-01',
       player: player,
-    );
+    )..priority = 0;
 
     joystick = JoystickComponent(
       knob: SpriteComponent(
@@ -53,12 +53,12 @@ class PixelAdventure extends FlameGame
       world: world,
       width: 640,
       height: 360,
-      hudComponents: [joystick],
+      // hudComponents: [joystick],
     );
     cam.viewfinder.anchor = Anchor.topLeft;
 
-    await addAll([cam, world]);
-    // addJoystick();
+    addAll([cam, world]);
+    addJoystick();
 
     // for some reason, the joystick was behind the background. Not sure why yet
     // had to change the joystick to be part of the HUD
@@ -97,7 +97,6 @@ class PixelAdventure extends FlameGame
 
   void addJoystick() {
     joystick = JoystickComponent(
-      priority: 5,
       knob: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Knob.png'),
@@ -115,6 +114,6 @@ class PixelAdventure extends FlameGame
       ),
     );
 
-    add(joystick);
+    add(joystick..priority = 5);
   }
 }
