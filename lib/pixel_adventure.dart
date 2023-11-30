@@ -5,8 +5,8 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/painting.dart';
-import 'package:pixel_adventure/actors/player.dart';
-import 'package:pixel_adventure/levels/level.dart';
+import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/components/level.dart';
 
 class PixelAdventure extends FlameGame
     with HasKeyboardHandlerComponents, DragCallbacks {
@@ -18,7 +18,7 @@ class PixelAdventure extends FlameGame
     character: 'Mask Dude',
   );
   late JoystickComponent joystick;
-  bool showJoystick = true;
+  bool showJoystick = false;
 
   @override
   FutureOr<void> onLoad() async {
@@ -27,7 +27,7 @@ class PixelAdventure extends FlameGame
 
     @override
     final world = Level(
-      levelName: 'Level-01',
+      levelName: 'Level-02',
       player: player,
     )..priority = 0;
 
@@ -44,8 +44,9 @@ class PixelAdventure extends FlameGame
         ),
       ),
       margin: const EdgeInsets.only(
-        left: 16,
-        bottom: 64,
+        left: 8,
+        //Don't think this should be this big...
+        bottom: 320,
       ),
     );
 
@@ -58,7 +59,6 @@ class PixelAdventure extends FlameGame
     cam.viewfinder.anchor = Anchor.topLeft;
 
     addAll([cam, world]);
-    addJoystick();
 
     // for some reason, the joystick was behind the background. Not sure why yet
     // had to change the joystick to be part of the HUD
@@ -80,18 +80,18 @@ class PixelAdventure extends FlameGame
       case JoystickDirection.left:
       case JoystickDirection.downLeft:
       case JoystickDirection.upLeft:
-        player.playerDirection = PlayerDirection.left;
+        player.horizontalMovement = -1;
         break;
       case JoystickDirection.right:
       case JoystickDirection.downRight:
       case JoystickDirection.upRight:
-        player.playerDirection = PlayerDirection.right;
+        player.horizontalMovement = 1;
         break;
       case JoystickDirection.idle:
-        player.playerDirection = PlayerDirection.none;
+        player.horizontalMovement = 0;
         break;
       default:
-        player.playerDirection = PlayerDirection.none;
+        player.horizontalMovement = 0;
     }
   }
 
@@ -114,6 +114,6 @@ class PixelAdventure extends FlameGame
       ),
     );
 
-    add(joystick..priority = 5);
+    add(joystick);
   }
 }
