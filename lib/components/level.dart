@@ -60,6 +60,21 @@ class Level extends World {
             collisionBlock.add(platform);
             add(platform);
             break;
+          case 'Quicksand':
+            final quicksand = CollisionBlock(
+              position: Vector2(
+                collision.x,
+                collision.y,
+              ),
+              size: Vector2(
+                collision.width,
+                collision.height,
+              ),
+              isQuickSand: true,
+            );
+            collisionBlock.add(quicksand);
+            add(quicksand);
+            break;
           default:
             final block = CollisionBlock(
               position: Vector2(
@@ -76,7 +91,7 @@ class Level extends World {
         }
       }
     }
-    player.collisionBlock = collisionBlock;
+    player.collisionBlocks = collisionBlock;
     // super is refering to the 'extends', this will call all the other onLoad
     // events within the component we are extendings, in this case 'World'
     return super.onLoad();
