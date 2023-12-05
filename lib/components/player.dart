@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
+import 'package:pixel_adventure/components/player_hitbox.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
@@ -31,13 +33,32 @@ class Player extends SpriteAnimationGroupComponent
   Vector2 velocity = Vector2.zero();
   List<CollisionBlock> collisionBlocks = [];
   bool isOnGround = false;
+  bool isInQuicksand = false;
   bool hasJumped = false;
+  PlayerHitbox hitbox = PlayerHitbox(
+    offsetX: 10,
+    offsetY: 4,
+    width: 14,
+    height: 28,
+  );
 
 // Keep the main override methods together
   @override
   FutureOr<void> onLoad() {
-    // debugMode = true;
     _loadAllAnimations();
+    // debugMode = true;
+    add(
+      RectangleHitbox(
+        position: Vector2(
+          hitbox.offsetX,
+          hitbox.offsetY,
+        ),
+        size: Vector2(
+          hitbox.width,
+          hitbox.height,
+        ),
+      ),
+    );
     return super.onLoad();
   }
 
@@ -70,7 +91,12 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _updatePlayerMovement(double dt) {
-    if (hasJumped && isOnGround) _playerJumped(dt);
+    if (hasJumped && isInQuicksand ||
+        hasJumped && isInQuicksand && isOnGround) {
+      _playerJumpedInQuicksand(dt);
+    } else if (hasJumped && isOnGround) {
+      _playerJumped(dt);
+    }
 
     // Prevents user to jump
     //when hasn't jumped in the air
@@ -158,11 +184,11 @@ class Player extends SpriteAnimationGroupComponent
         )) {
           if (velocity.x > 0) {
             velocity.x = 0;
-            position.x = block.x - width;
+            position.x = block.x - hitbox.offsetX - hitbox.width;
           }
           if (velocity.x < 0) {
             velocity.x = 0;
-            position.x = block.x + block.width + width;
+            position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
           }
         }
       } else if (block.isQuickSand) {
@@ -196,31 +222,35 @@ class Player extends SpriteAnimationGroupComponent
           if (velocity.y > 0) {
             velocity.y = 0;
 
-            //Shouldn't this be Height instead of width?
-            position.y = block.y - width;
+            //Shouldn't this be Height instead of width?  Yep, I was right!
+            position.y = block.y - hitbox.height - hitbox.offsetY;
             isOnGround = true;
             break;
           }
         }
       } else if (block.isQuickSand) {
         if (checkCollisions(player: this, block: block)) {
+          isInQuicksand = true;
           if (velocity.y > 0) {
             velocity.y = 0;
           }
+        } else {
+          isInQuicksand = false;
         }
       } else {
         if (checkCollisions(player: this, block: block)) {
           if (velocity.y > 0) {
             velocity.y = 0;
 
-            //Shouldn't this be Height instead of width?
-            position.y = block.y - width;
+            //Shouldn't this be Height instead of width? Yep, I was right!
+            position.y = block.y - hitbox.height - hitbox.offsetY;
             isOnGround = true;
+            isInQuicksand = false;
             break;
           }
           if (velocity.y < 0) {
             velocity.y = 0;
-            position.y = block.y + block.height;
+            position.y = block.y + block.height - hitbox.offsetY;
           }
         }
       }
@@ -232,5 +262,10 @@ class Player extends SpriteAnimationGroupComponent
     position.y += velocity.y * dt;
     hasJumped = false;
     isOnGround = false;
+  }
+
+  void _playerJumpedInQuicksand(double dt) {
+    velocity.y = -_jumpForce / 4;
+    position.y += velocity.y * dt;
   }
 }

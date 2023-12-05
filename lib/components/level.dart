@@ -23,6 +23,10 @@ class Level extends World {
 
     add(level);
 
+    _scrollingBackground();
+    _spawningObjects();
+    _addCollisions();
+
     final spawnPointLayer = level.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
     if (spawnPointLayer != null) {
@@ -96,4 +100,10 @@ class Level extends World {
     // events within the component we are extendings, in this case 'World'
     return super.onLoad();
   }
+
+  void _scrollingBackground() {}
+
+  void _spawningObjects() {}
+
+  void _addCollisions() {}
 }

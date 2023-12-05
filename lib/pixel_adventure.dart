@@ -54,7 +54,7 @@ class PixelAdventure extends FlameGame
       world: world,
       width: 640,
       height: 360,
-      // hudComponents: [joystick],
+      hudComponents: showJoystick ? [joystick] : [],
     );
     cam.viewfinder.anchor = Anchor.topLeft;
 
