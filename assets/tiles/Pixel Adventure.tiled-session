@@ -24,10 +24,10 @@
                 2
             ],
             "scale": 1.5,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 320,
-                "y": 184.33333333333334
+                "x": 285,
+                "y": 216
             }
         },
         "Pixel Adventure.tsx": {
