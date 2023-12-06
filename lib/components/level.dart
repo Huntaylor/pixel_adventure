@@ -27,6 +27,14 @@ class Level extends World {
     _spawningObjects();
     _addCollisions();
 
+    // super is refering to the 'extends', this will call all the other onLoad
+    // events within the component we are extendings, in this case 'World'
+    return super.onLoad();
+  }
+
+  void _scrollingBackground() {}
+
+  void _spawningObjects() {
     final spawnPointLayer = level.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
     if (spawnPointLayer != null) {
@@ -43,7 +51,9 @@ class Level extends World {
         }
       }
     }
+  }
 
+  void _addCollisions() {
     final collisionsLayer = level.tileMap.getLayer<ObjectGroup>('Collisions');
 
     if (collisionsLayer != null) {
@@ -96,14 +106,5 @@ class Level extends World {
       }
     }
     player.collisionBlocks = collisionBlock;
-    // super is refering to the 'extends', this will call all the other onLoad
-    // events within the component we are extendings, in this case 'World'
-    return super.onLoad();
   }
-
-  void _scrollingBackground() {}
-
-  void _spawningObjects() {}
-
-  void _addCollisions() {}
 }
