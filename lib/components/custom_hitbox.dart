@@ -1,12 +1,12 @@
 import 'dart:core';
 
-class PlayerHitbox {
+class CustomHitbox {
   final double offsetX;
   final double offsetY;
   final double width;
   final double height;
 
-  PlayerHitbox({
+  CustomHitbox({
     required this.offsetX,
     required this.offsetY,
     required this.width,

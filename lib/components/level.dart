@@ -6,8 +6,9 @@ import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/pixel_adventure.dart';
 
-class Level extends World with HasGameRef {
+class Level extends World with HasGameRef<PixelAdventure> {
   final String levelName;
   late TiledComponent level;
   final Player player;

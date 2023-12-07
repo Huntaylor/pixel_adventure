@@ -9,7 +9,7 @@ import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
 
 class PixelAdventure extends FlameGame
-    with HasKeyboardHandlerComponents, DragCallbacks {
+    with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
   @override
   Color backgroundColor() => const Color(0x0FF21F30);
 
@@ -27,7 +27,7 @@ class PixelAdventure extends FlameGame
 
     @override
     final world = Level(
-      levelName: 'Level-02',
+      levelName: 'Level-01',
       player: player,
     )..priority = 0;
 
