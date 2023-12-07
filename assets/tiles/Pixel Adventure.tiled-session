@@ -10,14 +10,14 @@
     "fileStates": {
         "Level-01.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 362.6666666666667,
-                "y": 198
+                "x": 320,
+                "y": 184
             }
         },
         "Level-02.tmx": {
