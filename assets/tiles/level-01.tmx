@@ -39,8 +39,8 @@
   </object>
   <object id="10" type="Saw" x="304" y="96" width="32" height="32">
    <properties>
-    <property name="isVertical" type="bool" value="false"/>
-    <property name="offNeg" type="float" value="8"/>
+    <property name="isVertical" type="bool" value="true"/>
+    <property name="offNeg" type="float" value="2"/>
     <property name="offPos" type="float" value="7"/>
    </properties>
   </object>
