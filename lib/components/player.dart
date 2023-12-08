@@ -117,7 +117,10 @@ class Player extends SpriteAnimationGroupComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!hasReachedCheckpoint) {
-      if (other is Fruit) other.collidedWithPlayer();
+      if (other is Fruit) {
+        game.lastFruitcollected = other;
+        other.collidedWithPlayer();
+      }
       if (other is Saw) _respawn();
       if (other is Checkpoint && !hasReachedCheckpoint && gotAllFruit) {
         _reachedCheckpoint();
