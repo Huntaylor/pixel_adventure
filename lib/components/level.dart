@@ -21,6 +21,8 @@ class Level extends World with HasGameRef<PixelAdventure> {
   //onLoad only runs once as soon as we add Level to the game
   @override
   FutureOr<void> onLoad() async {
+    game.amountOfFruit = 0;
+    game.collectedFruit = 0;
     level = await TiledComponent.load(
       '$levelName.tmx',
       Vector2.all(16),
@@ -87,6 +89,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
               ),
             );
             add(fruit);
+            ++game.amountOfFruit;
             break;
           case 'Saw':
             final isVertical = spawnPoint.properties.getValue('isVertical');

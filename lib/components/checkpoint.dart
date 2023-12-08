@@ -33,7 +33,11 @@ class Checkpoint extends SpriteAnimationComponent
       ),
     );
 
-    animation = flagSpriteAnimation(name: noFlagName, amount: 1, stepTime: 1);
+    animation = flagSpriteAnimation(
+      name: noFlagName,
+      amount: 1,
+      stepTime: 1,
+    );
     return super.onLoad();
   }
 
