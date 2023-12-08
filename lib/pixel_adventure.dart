@@ -4,24 +4,27 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
-import 'package:flutter/material.dart';
 import 'package:pixel_adventure/components/fruit.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
 
 class PixelAdventure extends FlameGame
-    with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
+    with
+        HasKeyboardHandlerComponents,
+        DragCallbacks,
+        HasCollisionDetection,
+        TapCallbacks {
   // @override
   // Color backgroundColor() => const Color(0x0FF21F30);
 
-  late CameraComponent cam;
+  // late CameraComponent cam;
 
   Player player = Player(
     character: 'Mask Dude',
   );
+  JumpButton jumpButton = JumpButton();
   late JoystickComponent joystick;
-  late JumpButton jumpButton;
   bool showControls = true;
   List<String> levelNames = ['Level-01', 'Level-02'];
   int currentLevelIndex = 0;
@@ -31,11 +34,8 @@ class PixelAdventure extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
-    // Load all images into cache, not idea if you have a lot of images
+    // Load all images into cache, not a good idea if you have a lot of images
     await images.loadAllImages();
-
-    _loadLevel();
-
     joystick = JoystickComponent(
       knob: SpriteComponent(
         sprite: Sprite(
@@ -48,12 +48,10 @@ class PixelAdventure extends FlameGame
           images.fromCache('HUD/Joystick.png'),
         ),
       ),
-      margin: const EdgeInsets.only(
-        left: 16,
-        bottom: 64,
-      ),
+      position: Vector2.all(0),
     );
-    jumpButton = JumpButton()..priority = 10;
+
+    _loadLevel();
 
     // for some reason, the joystick was behind the background. Not sure why yet
     // had to change the joystick to be part of the HUD
@@ -110,48 +108,38 @@ class PixelAdventure extends FlameGame
         player: player,
       );
 
-      cam = CameraComponent.withFixedResolution(
+      camera = CameraComponent.withFixedResolution(
         world: world,
         width: 640,
         height: 360,
         hudComponents: [
           // GameHUD(),
-          /*  if (showControls) */ joystick,
-          /*  if (showControls) */ jumpButton,
+          if (showControls) joystick,
+          if (showControls) jumpButton,
         ],
       );
-      cam.viewfinder.anchor = Anchor.topLeft;
-      // cam.viewfinder.addAll([joystick, jumpButton]);
+
+      //Gives me the appropriate game size with Aspect ratio.
+      //There has to be a better way to get it though
+      double screenWidth = jumpButton.game.size.x;
+      double screenHeight = jumpButton.game.size.y;
+      const margin = 32;
+      const buttonSize = 64;
+      const sizeDiff = 8;
+
+      double joystickX = (screenWidth / 6) - buttonSize + 6;
+      double joystickY = screenHeight - margin - sizeDiff;
+
+      joystick.position = Vector2(
+        joystickX,
+        joystickY,
+      );
+
+      camera.viewfinder.anchor = Anchor.topLeft;
 
       addAll(
-        [cam, world],
+        [camera, world],
       );
     });
   }
 }
-
-
-
-
-
-  // void addJoystick() {
-  //   joystick = JoystickComponent(
-  //     knob: SpriteComponent(
-  //       sprite: Sprite(
-  //         images.fromCache('HUD/Knob.png'),
-  //       ),
-  //     ),
-  //     knobRadius: 32,
-  //     background: SpriteComponent(
-  //       sprite: Sprite(
-  //         images.fromCache('HUD/Joystick.png'),
-  //       ),
-  //     ),
-  //     margin: const EdgeInsets.only(
-  //       left: 32,
-  //       bottom: 32,
-  //     ),
-  //   );
-
-  //   add(joystick);
-  // }
